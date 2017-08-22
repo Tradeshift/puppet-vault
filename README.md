@@ -49,6 +49,8 @@ Please see [The official documentation](https://www.vaultproject.io/docs/configu
 
 * `service_options`: Extra argument to pass to `vault server`, as per: `vault server --help`
 
+* `restart_service`: Restart service if the package has been changed.
+
 * `num_procs`: Sets the `GOMAXPROCS` environment variable, to determine how many CPUs Vault can use. The official Vault Terraform install.sh script sets this to the output of ``nprocs``, with the comment, "Make sure to use all our CPUs, because Vault can block a scheduler thread". Default: number of CPUs on the system, retrieved from the ``processorcount`` fact.
 
 * `manage_backend_dir`: When using the file backend, this boolean determines whether or not the path (as specified in the `['file']['path']` section of the backend config) is created, and the owner and group set to the vault user.  Default: `false`

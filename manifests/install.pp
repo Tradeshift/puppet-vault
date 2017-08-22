@@ -23,8 +23,15 @@ class vault::install {
       }
 
     'repo': {
-      package { $::vault::package_name:
-        ensure  => $::vault::package_ensure,
+      if $::vault::restart_service and $::vault::manage_service  {
+        package { $::vault::package_name:
+          ensure => $::vault::package_ensure,
+          notify => Service['vault'],
+        }
+      } else {
+        package { $::vault::package_name:
+          ensure => $::vault::package_ensure,
+        }
       }
     }
 

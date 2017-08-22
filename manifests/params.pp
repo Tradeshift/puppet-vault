@@ -15,6 +15,7 @@ class vault::params {
   $download_extension = 'zip'
   $version            = '0.8.0'
   $service_name       = 'vault'
+  $restart_service    = false
   $num_procs          = $::processorcount
   $install_method     = 'archive'
   $package_name       = 'vault'

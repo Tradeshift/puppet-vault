@@ -134,6 +134,21 @@ describe 'vault' do
 
           it { should contain_package('vault') }
         end
+
+        context "installs from repository with restart_service enabled" do
+          let(:params) {{
+            :install_method  => 'repo',
+            :package_name    => 'vault',
+            :manage_service  => true,
+            :restart_service => true,
+            :package_ensure  => 'installed',
+          }}
+
+          it {
+            should contain_package('vault')
+              .that_notifies('Service[vault]')
+          }
+        end
       end
 
       context "when specifying manage_service" do
