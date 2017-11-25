@@ -9,6 +9,7 @@ describe 'vault' do
         :processorcount => '3',
         :architecture   => 'x86_64',
         :kernel         => 'Linux',
+        :service_provider => 'systemd',
       }}
 
       context "vault class with simple configuration" do
@@ -195,6 +196,7 @@ describe 'vault' do
       :processorcount            => '3',
       :architecture              => 'x86_64',
       :kernel                    => 'Linux',
+      :service_provider          => 'sysv',
    }}
    context 'includes SysV init script' do
       it {
@@ -300,6 +302,7 @@ describe 'vault' do
       :processorcount            => '3',
       :architecture              => 'x86_64',
       :kernel                    => 'Linux',
+      :service_provider          => 'sysv',
     }}
     context 'includes SysV init script' do
       it {
@@ -404,6 +407,7 @@ describe 'vault' do
       :processorcount            => '3',
       :architecture              => 'x86_64',
       :kernel                    => 'Linux',
+      :service_provider          => 'systemd',
     }}
     context 'includes systemd init script' do
       it {
@@ -547,6 +551,7 @@ describe 'vault' do
                      :processorcount  => '3',
                      :architecture    => 'x86_64',
                      :kernel          => 'Linux',
+                     :service_provider => 'upstart',
                    }}
       context 'includes init link to upstart-job' do
         it {
@@ -665,6 +670,7 @@ describe 'vault' do
                      :processorcount  => '3',
                      :architecture    => 'x86_64',
                      :kernel          => 'Linux',
+                     :service_provider => 'systemd',
                    }}
       context 'includes systemd init script' do
         it {
@@ -808,6 +814,7 @@ describe 'vault' do
       :processorcount            => '3',
       :architecture              => 'x86_64',
       :kernel                    => 'Linux',
+      :service_provider          => 'systemd',
     }}
     let(:params) {{
       :service_provider => 'foo',
@@ -818,15 +825,5 @@ describe 'vault' do
           .to raise_error(Puppet::Error, /vault::service_provider 'foo' is not valid/)
       }
     end
-  end
-  context 'on unsupported osfamily' do
-    let(:facts) {{
-      :path           => '/usr/local/bin:/usr/bin:/bin',
-      :osfamily       => 'nexenta',
-      :processorcount => '3',
-    }}
-    it {
-      expect { should contain_class('vault') }.to raise_error(Puppet::Error, /Module vault is not supported on osfamily 'nexenta'/)
-    }
   end
 end
