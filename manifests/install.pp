@@ -43,7 +43,7 @@ class vault::install {
   file { $vault_bin:
     owner => 'root',
     group => 'root',
-    mode  => '0555',
+    mode  => '0755',
   }
 
   if !$::vault::disable_mlock {
