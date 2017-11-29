@@ -15,7 +15,8 @@ class vault::params {
   $version            = '0.8.3'
   $service_name       = 'vault'
   $restart_service    = false
-  $num_procs          = $::processorcount
+  $num_procs          = $facts['processorcount']
+  $install_method     = 'archive'
   $package_name       = 'vault'
   $package_ensure     = 'installed'
 
@@ -47,17 +48,14 @@ class vault::params {
 
   $service_provider = $facts['service_provider']
 
-  case $::architecture {
-    'x86_64', 'amd64': { $arch = 'amd64' }
-    'i386':            { $arch = '386'   }
-    /^arm.*/:          { $arch = 'arm'   }
-    default:           {
-      fail("Unsupported kernel architecture: ${::architecture}")
-    }
+  case $facts['architecture'] {
+    /(x86_64|amd64)/: { $arch = 'amd64' }
+    'i386':           { $arch = '386'   }
+    /^arm.*/:         { $arch = 'arm'   }
+    default:          { fail("Unsupported kernel architecture: ${facts['architecture']}") }
   }
-  $os = downcase($::kernel)
 
-  case $::osfamily {
+  case $facts['os']['family'] {
     'Archlinux': {
       $install_method      = 'repo'
       $bin_dir             = '/bin'
@@ -69,4 +67,5 @@ class vault::params {
       $manage_service_file = undef
     }
   }
+  $os = downcase($facts['kernel'])
 }
