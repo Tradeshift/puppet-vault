@@ -16,7 +16,6 @@ class vault::params {
   $service_name       = 'vault'
   $restart_service    = false
   $num_procs          = $facts['processorcount']
-  $install_method     = 'archive'
   $package_name       = 'vault'
   $package_ensure     = 'installed'
 
